@@ -88,6 +88,7 @@ import * as panel from './panel.css';
 // to load on slow machines without looking dead
 const TIMEFRAMES = [
     { label: '1m', minutes: 1, days: 3 },
+    { label: '3m', minutes: 3, days: 7 },
     { label: '5m', minutes: 5, days: 10 },
     { label: '15m', minutes: 15, days: 20 },
     { label: '60m', minutes: 60, days: 60 },
@@ -124,7 +125,7 @@ export function CandleChart({
     const candleSeriesRef = useRef<ISeriesApi<'Candlestick'> | null>(null);
     const volSeriesRef = useRef<ISeriesApi<'Histogram'> | null>(null);
     const lastBarRef = useRef<Candle | null>(null);
-    const [tfIdx, setTfIdx] = useState(1); // default 5m
+    const [tfIdx, setTfIdx] = useState(2); // default 5m
     const [empty, setEmpty] = useState(false);
     const [loading, setLoading] = useState(false);
     // 歷史斷層自癒（issue #18）：開盤前抓的歷史可能缺少上游尚未發布的
@@ -140,7 +141,7 @@ export function CandleChart({
     // throw inside the effect, which unmounts the whole app (issue #1)
     const loadedKeyRef = useRef('');
     const quote = useQuote(contract.code);
-    const tf = TIMEFRAMES[tfIdx] ?? TIMEFRAMES[1];
+    const tf = TIMEFRAMES[tfIdx] ?? TIMEFRAMES[2];
     const themeSettings = useThemeSettings();
     const colors = getChartColors(themeSettings);
     const themeKey = `${themeSettings.mode}-${themeSettings.convention}`;
